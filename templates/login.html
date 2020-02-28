@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>my website</title>
+</head>
+<body>
+    <form method="post">
+        <h2><center>LOGIN</center></h2>
+        {{ form1.csrf_token }}
+        <table align="center">
+            <tr><td>{{ form1.nickname.label }}</td><td>{{ form1.nickname }}</td></tr>
+            <tr><td>{{ form1.password.label }}</td><td>{{ form1.password }}</td></tr>
+            <tr><td align="right">{{ form1.submit }}</td><td><a href="forgetpassword">Forget password?</a></td></tr>
+            <tr><small><td>Dont't have a count?</td><td><a href="registration">Sign up</a></td></small></tr>
+        </table>
+    </form>
+</body>
+</html>

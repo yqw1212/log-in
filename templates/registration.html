@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+</head>
+<body>
+    <div>
+        <form method="post" action="{{ request.full_path }}">
+            <center>SIGN UP</center>
+            {{ form1.csrf_token }}
+            <table align="center">
+                <tr><td>{{ form1.nickname.label }}</td><td>{{ form1.nickname }}</td></tr>
+                <tr><td></td><td><small>5~20位字符串,区分大小写</small></td></tr>
+                <tr><td>{{ form1.password.label }}</td><td>{{ form1.password }}</td></tr>
+                <tr><td></td><td><small>6~20位字符串,区分大小写</small></td></tr>
+                <tr><td>{{ form1.password2.label }}</td><td>{{ form1.password2 }}</td></tr>
+                <tr><td></td><td><small>确保两次密码一致</small></td></tr>
+                <tr><td>{{ form2.email.label }}</td><td>{{ form2.email }}</td></tr>
+                <tr><td></td><td><small>确保邮箱地址正确</small></td></tr>
+                <tr><td>{{ form1.verificationCode.label }}</td><td>{{ form1.verificationCode }}</td></tr>
+                <tr><td></td><td><small>验证码请在邮箱查收</small></td></tr>
+                <tr><td align="right">{{ form1.accept }}</td><td>{{ form1.accept.label }}  <a href="rules">rules</a></td></tr>
+                <tr><td align="right">{{ form1.submit1 }}</td><td align="right">{{ form2.submit2 }}</td></tr>
+            </table>
+            <center><small>Already have a count? <a href="/">Sigh in</a></small></center>
+        </form>
+    </div>
+</body>
+</html>
