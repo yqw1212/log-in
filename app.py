@@ -1,4 +1,4 @@
-﻿from flask import Flask, flash, redirect, render_template, url_for
+from flask import Flask, flash, redirect, render_template, url_for, session
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
@@ -25,8 +25,8 @@ app.config.update(
     MAIL_PORT=465,
     MAIL_USE_SSL=True,
     MAIL_USE_TLS=False,
-    MAIL_USERNAME='',
-    MAIL_PASSWORD='' # 授权码
+    MAIL_USERNAME='953894443@qq.com',
+    MAIL_PASSWORD='hvutpzuxrtwhbffe' # 授权码
 )
 
 app.jinja_env.trim_blocks = True
@@ -93,9 +93,11 @@ def login():
     form = LoginForm()
     if form.submit.data:
         pwd = get_pwd(form.nickname.data)
+        nick = form.nickname.data
         #if pwd == form.password.data:
         if check_password_hash(pwd, form.password.data):
-            return redirect(url_for("index"))
+            session[nick] = True
+            return redirect(url_for("index", nick=nick))
         else:
             return "密码不正确"
     return render_template("login.html", form1=form)
@@ -131,7 +133,7 @@ def registration():
 
             body = str(nickname)+",welcomne !"
             send_message("Welcome !", str(email), "953894443@qq.com", body)
-            return redirect(url_for("index"))
+            return redirect(url_for("login"))
         else:
             return "验证码不正确"
 
@@ -139,9 +141,18 @@ def registration():
     return render_template("registration.html", form1=form1, form2=form2, messages=messages)
 
 
-@app.route('/index', methods=['Get', 'Post'])
-def index():
-    return render_template("index.html")
+@app.route('/index/<nick>', methods=['Get', 'Post'])
+def index(nick):
+    if nick not in session:
+        return "未登录"
+    return render_template("index.html", nick=nick)
+
+
+@app.route('/logout/<nick>',methods=['GET','POST'])
+def logout(nick):
+    if nick in session:
+        session.pop(nick)
+    return redirect(url_for("index", nick=nick))
 
 
 @app.route('/forgetpassword', methods=['Get', 'Post'])
